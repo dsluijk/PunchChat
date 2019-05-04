@@ -23,7 +23,7 @@ fn main() -> io::Result<()> {
     let socket = UdpSocket::bind(format!("0.0.0.0:{}", port))?;
     socket.set_nonblocking(true)?;
     let mut buf = [0; 255];
-    socket.send_to("Client connected!".as_bytes(), address)?;
+    socket.send_to("Client connected!\n".as_bytes(), address)?;
 
     println!("Welcome to PunchChat!");
     println!("We are listening on port {}.", port);

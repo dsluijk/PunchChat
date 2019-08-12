@@ -13,4 +13,3 @@ categories = ["command-line-utilities"]
 
 [dependencies]
 structopt = "^0.2.15"
-rand = "^0.6.5"

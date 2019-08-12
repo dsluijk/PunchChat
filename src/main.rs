@@ -1,4 +1,3 @@
-use rand::{thread_rng, Rng};
 use std::{
     io,
     net::{SocketAddr, UdpSocket},
@@ -12,18 +11,14 @@ fn main() -> io::Result<()> {
     let opt = Cli::from_args();
 
     let address: SocketAddr = opt.remote.parse().expect("!! Unable to parse socket address");
-    let mut port = opt.port;
-
-    if opt.port == 0 {
-        let mut rng = thread_rng();
-        port = rng.gen_range(1024, 49151);
-    }
 
     let stdin = stdin_thread();
-    let socket = UdpSocket::bind(format!("0.0.0.0:{}", port))?;
+    let socket = UdpSocket::bind(format!("0.0.0.0:{}", opt.port))?;
     socket.set_nonblocking(true)?;
     let mut buf = [0; 255];
     socket.send_to("Client connected!\n".as_bytes(), address)?;
+
+    let port = socket.local_addr().expect("!! Unable to get local socket address").port();
 
     println!("Welcome to PunchChat!");
     println!("We are listening on port {}.", port);
